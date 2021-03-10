@@ -50,22 +50,10 @@ public class ImageInPDFFinal extends PDFTextStripper {
      */
     public static void main(String[] args) throws IOException {
        
-       
-            Document document3 = new Document();
             byte[] decodedBase64PDF={};
-        try {
-            document3.open();
             decodedBase64PDF = Base64.decodeBase64(Base64PDF.getBytes());   
-            
-           
-            document3.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         
-        PDDocument document= null;
-        
+            PDDocument document= null;
         try {
             
             document = PDDocument.load(decodedBase64PDF);
@@ -133,38 +121,17 @@ public class ImageInPDFFinal extends PDFTextStripper {
                       System.out.println("Word detected");
                       XCoordinate =arrX.get(Index);
                       YCoordinate = arrY.get(Index);
-                      
-        Document documentImage = new Document();
-   
+  
+            //Decode Signature to ByteArray
             byte[] decodedBase64Image={};
-        try {
-           
-            documentImage.open();
-            
             decodedBase64Image = Base64.decodeBase64(Base64Image.getBytes());
-            documentImage.add(Image.getInstance(decodedBase64Image));
-          
-            documentImage.close();
-       
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
         
-            Document documentPDF = new Document();
+            //Decode PDF to ByteArray
             byte[] decodedPDF={};
-        try {
-           
-            documentPDF.open();
             decodedPDF = Base64.decodeBase64(Base64PDF.getBytes());   
-            documentPDF.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        
 
-        //Image inserting on specific Coordinates
+
+        //Calculate Number of Pages 
         PDDocument  doc = PDDocument.load(decodedPDF);
         int Pages = doc.getNumberOfPages();
         PDPage page = doc.getPage(Pages-1); 
@@ -181,7 +148,7 @@ public class ImageInPDFFinal extends PDFTextStripper {
         PDImageXObject pdfimg = PDImageXObject.createFromByteArray(doc, decodedBase64Image, "png"); 
         PDPageContentStream image = new PDPageContentStream(doc, page, true, true, true); 
            
-        //X Coordiantes , Y Coordinates max hoehe 842 docx; 794 bei odt; von unten nach oben
+        //X Coordiantes , Y Coordinates max height 842px docx; 794px with odt;
         image.drawImage(pdfimg, XCoordinate, YCoordinate, 100, 40);
         System.out.println("Image Inserted at:[X: "+XCoordinate+" ; Y: "+YCoordinate+"]"); 
 
