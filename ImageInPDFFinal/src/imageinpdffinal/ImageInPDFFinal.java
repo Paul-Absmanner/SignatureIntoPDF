@@ -6,9 +6,7 @@
 package imageinpdffinal;
 
 
-import com.itextpdf.text.Image;
 import org.apache.commons.codec.binary.Base64;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfReader;
 import org.apache.pdfbox.text.PDFTextStripper;
